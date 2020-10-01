@@ -10,8 +10,11 @@ var ObstaclesGroup;
 var obstacle1,obstacle2,obstacle3,obstacle4,obstacle5,obstacle6;
 var restart,restartimage;
 var gameOver,gameOverimage;
-
+var checkpoint,die,jump;
 function preload (){
+  checkpoint= loadSound("checkPoint.mp3");
+  die= loadSound("die.mp3");
+  jump= loadSound("jump.mp3");
   trex_running=loadAnimation("trex1.png","trex3.png","trex4.png");
   trex_collided=loadAnimation("trex_collided.png");
   ground2=loadImage("ground2.png");
@@ -76,7 +79,7 @@ function draw() {
     count += Math.round(getFrameRate()/60);
     
     if (count>0 && count%100 === 0){
-     // playSound("checkPoint.mp3");
+     checkpoint.play();
     }
     
     if (ground.x < 0){
@@ -86,7 +89,7 @@ function draw() {
      //jump when the space key is pressed
     if(keyDown("space") && trex.y >= 159){
       trex.velocityY = -12 ;
-     // playSound("jump.mp3");
+      jump.play();
     }
   
     //add gravity
@@ -101,7 +104,7 @@ function draw() {
     //End the game when trex is touching the obstacle
     if(ObstaclesGroup.isTouching(trex)){
       gameState = END;
-    //  playSound("die.mp3");
+       die.play();
     }
     
   }
